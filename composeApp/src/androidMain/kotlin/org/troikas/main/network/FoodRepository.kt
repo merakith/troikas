@@ -11,7 +11,7 @@ class FoodRepository{
             try{
                 val response = RetrofitClient.apiService.getProductByBarcode(barcode)
                 response.product
-            } catch(e:Exception{
+            } catch(e:Exception){
                 e.printStackTrace()
                 null
             }
