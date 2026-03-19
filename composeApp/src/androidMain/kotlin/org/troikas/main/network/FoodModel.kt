@@ -1,6 +1,6 @@
 package org.troikas.main.network
 
-import com.google.gson.annotation.SerializedName 
+import com.google.gson.annotations.SerializedName 
 
 data class FoodResponse(
     val code: String,
