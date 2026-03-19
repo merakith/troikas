@@ -6,7 +6,7 @@ import org.troikas.main.network.FoodClient
 
 class FoodRepository{
     suspend fun getProduct(barcode:String): ProductDetails?{
-        //forces execution from UI thread to background thread pool
+        //forces execution to background thread pool
         return withContext(Dispatchers.IO){
             try{
                 val response = FoodClient.apiService.getProductByBarcode(barcode)
