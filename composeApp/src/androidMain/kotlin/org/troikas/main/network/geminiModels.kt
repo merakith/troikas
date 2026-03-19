@@ -1,4 +1,4 @@
-package com.yourteam.smartgrahak.network
+package org.troikas.main.network
 
 import com.google.gson.annotations.SerializedName
 

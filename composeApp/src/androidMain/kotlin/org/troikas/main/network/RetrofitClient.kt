@@ -1,4 +1,4 @@
-package com.yourteam.smartgrahak.network
+package org.troikas.main.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
