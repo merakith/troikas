@@ -13,7 +13,7 @@ object RetrofitClient{
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    val apiService: OpenFoodApi by lazy{
-        retrofit.create(OpenFoodApi::class.java)
+    val apiService: FoodApi by lazy{
+        retrofit.create(FoodApi::class.java)
     }
 }
