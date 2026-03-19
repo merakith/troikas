@@ -7,7 +7,7 @@ import org.troikas.main.network.GeminiClient
 
 class GeminiRepository{
     suspend fun analyseIngredients(ingredientsText:String): String?{
-        //forces execution from UI thread to background thread pool
+        // Switch to the IO dispatcher to run this block on a background thread pool
         return withContext(Dispatchers.IO){
             try{
                 val prompt="Act as an expert nutritionist. I scanned a product with these ingredients: $ingredientsText. Are these safe to consume? Give me a concise, 2-sentence analysis."
