@@ -1,7 +1,5 @@
 package org.troikas.main.network
 
-import com.google.gson.annotations.SerializedName
-
 data class GeminiRequest(
     val contents: List<GeminiContent>
 )
