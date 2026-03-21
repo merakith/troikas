@@ -1,4 +1,4 @@
-name: SmartGrahak Backend Test
+name: Android Unit Test Workflow
 
 on:
   push:
