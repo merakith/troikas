@@ -11,7 +11,7 @@ class ComposeAppAndroidUnitTest {
             println("booting repository")
             val repo=FoodRepository()
 
-            val testBarcode="8901058002346"
+            val testBarcode="8901058017687"
             println("sending request")
 
             val product=repo.getProduct(testBarcode)
