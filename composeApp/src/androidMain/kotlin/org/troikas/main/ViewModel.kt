@@ -23,7 +23,7 @@ class ViewModel:ViewModel(){
             _uiState.value=ScannerUiState.Loading
             try{
                 val product = repository.getProduct(barcode)
-                if(product!=null && product.ingredientsText!-null){
+                if(product!=null && product.ingredientsText!=null){
                     _uiState.value=ScannerUiState.Success(product.ingredientsText)
                 }else{
                     _uiState.value=ScannerUiState.Error("Product or ingredients not found.")
