@@ -15,7 +15,7 @@ sealed class ScannerUiState{
 }
 
 class ViewModel:ViewModel(){
-    private val repository=OpenFoodRepository()
+    private val repository=FoodRepository()
     private val _uiState=MutableStateFlow<ScannerUiState>(ScannerUiState.Idle)
     val uiState:StateFlow<ScannerUiState>=_uiState
     fun scanBarcode(barcode:String){
