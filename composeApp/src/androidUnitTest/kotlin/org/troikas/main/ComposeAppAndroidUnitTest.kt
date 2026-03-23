@@ -1,6 +1,8 @@
 package org.troikas.main
 
-import kotlin.test.Test
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
+import org.junit.Test
 import kotlinx.coroutines.runBlocking
 
 class ComposeAppAndroidUnitTest {
@@ -15,15 +17,16 @@ class ComposeAppAndroidUnitTest {
             println("sending request")
 
             val product=repo.getProduct(testBarcode)
-
+            
             println("server response:")
-            if(product!=null){
-                println("success")
-                println("Product Name: ${product.productName}")
-                println("Ingredients: ${product.ingredientsText}")
-            }else{
-                println("failed,product is null")
-            }
+            assertNotNull("Fatal Error: Product returned null",product)
+            assertNotNull("Data Error: Ingredients text is missing",product?.ingredientsText)
+            
+            val ingredients=product!!.ingredientsText!!.lowercase()
+            assertTrue(
+                "validation error:ingredients ($ingredients) did not contain expected data.",
+                ingredients.contains("wheat") || ingredients.contains("floor") || ingredients.length>10
+            )
             println("done")
         }
     }
