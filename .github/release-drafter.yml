@@ -1,0 +1,34 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+categories:
+  - title: 'New Features'
+    labels:
+      - 'feature'
+      - 'enhancement'
+    # This matches the 'feat:' commits
+    committers:
+      - 'feat' 
+  - title: 'Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bug'
+    # This matches the 'fix:' commits
+    committers:
+      - 'fix'
+  - title: 'Maintenance'
+    labels:
+      - 'chore'
+      - 'refactor'
+      - 'dependencies'
+    committers:
+      - 'chore'
+      - 'refactor'
+      - 'build'
+      - 'ci'
+
+# What to show if a commit doesn't match the above
+exclude-labels:
+  - 'skip-changelog'
+template: |
+  ## Other changes
+  $CHANGES
