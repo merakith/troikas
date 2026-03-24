@@ -45,7 +45,6 @@ class ViewModel:ViewModel(){
             }catch(e:Exception){
                 _uiState.value=ScannerUiState.Error("Network Error:${e.message}")
             }
-            }
         }
     }
 }
