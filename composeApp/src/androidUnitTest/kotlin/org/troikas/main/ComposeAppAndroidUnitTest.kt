@@ -11,7 +11,7 @@ class ComposeAppAndroidUnitTest {
     fun testValidBarcode() {
         runBlocking{
             val repo=FoodRepository()
-            val barcode="8904063230010"
+            val barcode="8904063230010" // Haldiram's Bhujia (400g)
             assertNotNull(repo.getProduct(barcode), "Error: Product info was not received!")
         }
     }
