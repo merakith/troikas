@@ -7,10 +7,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.troikas.main.ScannerUiState
 
+data class IngredientAnalysis(
+    val healthy: List<String>,
+    val fine: List<String>,
+    val avoid: List<String>
+)
+
 sealed class ScannerUiState{
     object Idle: ScannerUiState()
     object Loading: ScannerUiState()
-    data class Success(val ingredients:String):ScannerUiState()
+    data class Success(val analysis:IngredientAnalysis):ScannerUiState()
     data class Error(val message:String):ScannerUiState()
 }
 
