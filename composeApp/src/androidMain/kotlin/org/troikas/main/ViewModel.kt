@@ -17,7 +17,7 @@ data class IngredientAnalysis(
 sealed class ScannerUiState{
     object Idle: ScannerUiState()
     object Loading: ScannerUiState()
-    data class Success(val analysis:IngredientAnalysis):ScannerUiState()
+    data class Success(val productName:String,val analysis:IngredientAnalysis):ScannerUiState()
     data class Error(val message:String):ScannerUiState()
 }
 
@@ -36,8 +36,8 @@ class ViewModel:ViewModel(){
 
                 if(product!=null && product.ingredientsText!=null){
                     val productName=product.productName?:"Unknown Product"
-                    val finalAnalysis:IngredientAnalysis=geminiRepository.analyseIngredients(ingredientsText)
-                    _uiState.value=ScannerUiState.Success(finalAnalysis)
+                    val Analysis:IngredientAnalysis=geminiRepository.analyseIngredients(ingredientsText)
+                    _uiState.value=ScannerUiState.Success(productName,Analysis)
 
                 }else{
                     _uiState.value=ScannerUiState.Error("Product or ingredients not found.")
