@@ -1,30 +1,27 @@
 package org.troikas.main
 
-import kotlin.test.Test
 import kotlinx.coroutines.runBlocking
+import org.troikas.main.network.FoodRepository
+import kotlin.test.Test
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class ComposeAppAndroidUnitTest {
+    @Test
+    fun testValidBarcode() {
+        runBlocking{
+            val repo=FoodRepository()
+            val barcode="8901058002346"
+            assertNotNull(repo.getProduct(barcode), "Product info successfully received!")
+        }
+    }
 
     @Test
-    fun testOpenFoodFactsEngine() {
-        runBlocking{
-            println("booting repository")
-            val repo=FoodRepository()
-
-            val testBarcode="8901058002346"
-            println("sending request")
-
-            val product=repo.getProduct(testBarcode)
-
-            println("server response:")
-            if(product!=null){
-                println("success")
-                println("Product Name: ${product.productName}")
-                println("Ingredients: ${product.ingredientsText}")
-            }else{
-                println("failed,product is null")
-            }
-            println("done")
+    fun testInvalidBarcode() {
+        runBlocking {
+            val repo = FoodRepository()
+            val barcode = "0000000000"
+            assertNull(repo.getProduct(barcode), "Invalid product doesn't exist!")
         }
     }
 }
