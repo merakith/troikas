@@ -11,8 +11,8 @@ class ComposeAppAndroidUnitTest {
     fun testValidBarcode() {
         runBlocking{
             val repo=FoodRepository()
-            val barcode="8901058002346"
-            assertNotNull(repo.getProduct(barcode), "Product info successfully received!")
+            val barcode="8904063230010"
+            assertNotNull(repo.getProduct(barcode), "Error: Product info was not received!")
         }
     }
 
@@ -21,7 +21,7 @@ class ComposeAppAndroidUnitTest {
         runBlocking {
             val repo = FoodRepository()
             val barcode = "0000000000"
-            assertNull(repo.getProduct(barcode), "Invalid product doesn't exist!")
+            assertNull(repo.getProduct(barcode), "Error: Invalid product exists?")
         }
     }
 }
