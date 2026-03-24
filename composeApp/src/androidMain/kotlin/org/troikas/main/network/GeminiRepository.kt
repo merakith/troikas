@@ -10,7 +10,13 @@ class GeminiRepository{
         //forces execution from UI thread to background thread pool
         return withContext(Dispatchers.IO){
             try{
-                val prompt="Act as an expert nutritionist. I scanned a product with these ingredients: $ingredientsText. Are these safe to consume? Give me a concise, 2-sentence analysis."
+                val prompt="""I scanned a product with these ingredients: $ingredientsText. Categorize all the ingredients strictly into three arrays: 'healthy', 'fine', and 'avoid'.
+                CRITICAL INSTRUCTION: You must respond ONLY with a valid JSON object. Do not include markdown formatting, code blocks, or introductory text. Use this exact structure:
+                {
+                    "healthy": ["ingredient 1", "ingredient 2"],
+                    "fine": ["ingredient 3"],
+                    "avoid": ["ingredient 4"]
+                }"""
                 val requestPayload=GeminiRequest(
                     contents=listOf(
                         GeminiContent(
