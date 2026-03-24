@@ -1,0 +1,37 @@
+name: App Release & Changelog
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  release:
+    name: Generate Version and Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Calculate CalVer Version
+        id: calc_version
+        # Generates a version like 2026.03.42 better this way
+        run: |
+          CALVER="$(date +'%Y.%m').${{ github.run_number }}"
+          echo "VERSION=$CALVER" >> $GITHUB_ENV
+          echo "Calculated Version: $CALVER"
+
+      - name: Run Release Drafter
+        uses: release-drafter/release-drafter@v6
+        with:
+          version: ${{ env.VERSION }}
+          tag: v${{ env.VERSION }}
+          name: v${{ env.VERSION }}
+          # If 'publish: true' it will change from a draft into an official, public release each time automatically
+          publish: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
