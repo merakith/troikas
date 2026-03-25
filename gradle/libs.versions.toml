@@ -15,6 +15,9 @@ junit = "4.13.2"
 kotlin = "2.3.0"
 material3 = "1.10.0-alpha05"
 retrofit = "3.0.0"
+room = "2.6.1"
+work = "2.9.0"
+ksp = "2.3.0" 
 
 [libraries]
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
@@ -37,6 +40,10 @@ compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMul
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+room-runtime = {module = "androidx.room:room-runtime", version.ref="room"}
+room-ktx= {module = "androidx.room:room-ktx", version.ref= "room"}
+room-compiler = {module = "androidx.room:room-compiler", version.ref= "room"}
+work-runtime-ktx={module= "androidx.work:work-runtime-ktx", version.ref="work"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -46,3 +53,4 @@ androidKotlinMultiplatformApplication = { id = "com.android.kotlin.multiplatform
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+ksp = {id="com.google.devtools.ksp", version.ref= "ksp"}

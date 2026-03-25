@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -22,6 +23,10 @@ kotlin {
             implementation(libs.gson)
             implementation(libs.retrofit)
             implementation(libs.converter.gson)
+            implementation(libs.room.runtime)
+            implementation(libs.room.ktx)
+            ksp(libs.room.compiler)
+            implementation(libs.work.runtime.ktx)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
