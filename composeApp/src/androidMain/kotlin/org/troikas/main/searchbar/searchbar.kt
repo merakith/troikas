@@ -1,4 +1,4 @@
-package org.troikas.main.barcode
+package org.troikas.main.searchbar
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,9 +21,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 
 @Composable
-fun BarcodeSearchBar(navController: NavController) {
+fun SearchBar(navController: NavController) {
     var text by remember { mutableStateOf("") }
-
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

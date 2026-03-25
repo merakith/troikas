@@ -5,8 +5,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.troikas.main.barcode.BarcodeSearchBar
-import org.troikas.main.barcode.ResultScreen
+import org.troikas.main.searchbar.SearchBar
+import org.troikas.main.searchbar.ResultScreen
 
 @Composable
 @Preview
@@ -18,7 +18,7 @@ fun App() {
         startDestination = "search"
     ) {
         composable("search") {
-            BarcodeSearchBar(navController)
+            SearchBar(navController)
         }
         composable("result/{barcode}") { backStackEntry ->
             val barcode = backStackEntry.arguments?.getString("barcode")
