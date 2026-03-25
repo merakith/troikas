@@ -20,8 +20,10 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.gson)
+            implementation(libs.compose.material.icons.extended)
             implementation(libs.retrofit)
             implementation(libs.converter.gson)
+            implementation(libs.androidx.navigation.compose)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
