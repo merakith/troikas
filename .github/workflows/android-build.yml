@@ -3,7 +3,7 @@ name: Android Unit Test Workflow
 on:
   push:
     branches:
-      - [main] 
+      - main 
   
 jobs:
   test-backend:
