@@ -27,7 +27,6 @@ kotlin {
             implementation(libs.androidx.navigation.compose)
             implementation(libs.room.runtime)
             implementation(libs.room.ktx)
-            ksp(libs.room.compiler)
             implementation(libs.work.runtime.ktx)
         }
         commonMain.dependencies {
@@ -83,4 +82,5 @@ android {
 
 dependencies {
     debugImplementation(libs.compose.uiTooling)
+    ksp(libs.room.compiler)
 }
