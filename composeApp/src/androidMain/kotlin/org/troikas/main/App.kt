@@ -1,49 +1,28 @@
 package org.troikas.main
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.painterResource
-
-import troikas.composeapp.generated.resources.Res
-import troikas.composeapp.generated.resources.compose_multiplatform
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import org.troikas.main.searchbar.SearchBar
+import org.troikas.main.searchbar.ResultScreen
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = "search"
+    ) {
+        composable("search") {
+            SearchBar(navController)
+        }
+        composable("result/{barcode}") { backStackEntry ->
+            val barcode = backStackEntry.arguments?.getString("barcode")
+            ResultScreen(barcode)
         }
     }
 }
