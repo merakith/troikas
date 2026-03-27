@@ -1,10 +1,8 @@
-package org.troikas.main.repository
+package org.troikas.main.database
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
-import org.troikas.main.database.IngredientClassification
-import org.troikas.main.database.IngredientDao
 
 class IngredientRepository(private val ingredientDao: IngredientDao){
     //takes list of cleaned names and checks the local db
