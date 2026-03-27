@@ -5,7 +5,8 @@ import androidx.room.RoomDatabase
 
 //config
 @Database(
-     version=1,  // if we add another column, we change this
+    entities=[IngredientClassification::class],  //register tables here
+    version=1,  // if we add another column, we change this
     exportSchema=false  //shuts up the compiler about missing schema folders
 )
 abstract class AppDatabase: RoomDatabase(){
