@@ -5,8 +5,8 @@ import org.troikas.main.database.IngredientRepository
 import org.troikas.main.database.IngredientClassification
 
 class AnalyzeProductUseCase(
-    private val foodrepo: FoodRepository
-    private val ingredientrepo: IngredientRepository
+    private val foodrepo: FoodRepository,
+    private val ingredientrepo: IngredientRepository,
     private val parser:IngredientParser
 ){
     suspend fun execute(barcode:String): List<IngredientClassification>{
