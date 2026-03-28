@@ -12,8 +12,9 @@ class AnalyzeProductUseCase(
     suspend fun execute(barcode:String): List<IngredientClassification>{
         val product=foodrepo.getProduct(barcode)?: return emptyList()
         val rawIngredients= product.ingredientsText
-        if(rawIngredients.isNullOrEmpty()){ return emptyList()}
+        if(rawIngredients.isNullOrEmpty())return emptyList()
         val cleanList= parser.parseIngredients(rawIngredients)
         val localResults=ingredientrepo.analyzeIngredients(cleanList)
         return localResults
     }
+}
