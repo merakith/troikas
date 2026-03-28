@@ -6,7 +6,7 @@ class IngredientParser{
         //1.removed bracketed content
             .replace(Regex("\\(.*?\\)"), "")   
         //2. chop list
-            .split(",")
+            .split(",","-", " and ", " And ", " AND ")
         //3.trim whitespaces
             .map{it.trim()}
         //4.remove blanks
