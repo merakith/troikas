@@ -4,7 +4,7 @@ class IngredientParser{
     fun parseIngredients(rawString: String): List<String>{
         return rawString
             .replace(Regex("\\(.*?\\)"), "")   
-            .split(",")
+            .split(",","-", " and ", " And ", " AND ")
             .map{it.trim()}
             .filter{it.isNotEmpty()}
     }
