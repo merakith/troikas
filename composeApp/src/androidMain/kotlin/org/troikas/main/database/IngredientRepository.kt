@@ -1,7 +1,6 @@
 package org.troikas.main.database
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 
 class IngredientRepository(private val ingredientDao: IngredientDao){
