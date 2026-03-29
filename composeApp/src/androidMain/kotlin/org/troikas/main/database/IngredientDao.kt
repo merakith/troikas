@@ -14,8 +14,4 @@ interface IngredientDao{
     // takes a list and returns only matching rows
     @Query("SELECT * FROM ingredient_classification WHERE name IN (:ingredientNames)")
     fun getClassifications(ingredientNames: List<String>): List<IngredientClassification>
-
-    // nuke: wipe out all ingredients
-    @Query("DELETE FROM ingredient_classification")
-    fun clearAll(): Int
 }
