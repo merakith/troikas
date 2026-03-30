@@ -2,7 +2,6 @@ package org.troikas.main.network
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.troikas.main.network.FoodClient
 
 class FoodRepository{
     suspend fun getProduct(barcode:String): ProductDetails?{
