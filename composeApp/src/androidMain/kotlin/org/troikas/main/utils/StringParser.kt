@@ -10,7 +10,7 @@ class IngredientParser{
             .replace("}",",")   
             .replace("]",",")      
             .split(",","-", " and ", " And ", " AND ", ":")
-            .map{it.trim()}
+            .map{it.trim().lowercase()}
             .filter{it.isNotEmpty()}
     }
 }
