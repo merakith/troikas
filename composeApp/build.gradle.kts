@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -24,6 +25,9 @@ kotlin {
             implementation(libs.retrofit)
             implementation(libs.converter.gson)
             implementation(libs.androidx.navigation.compose)
+            implementation(libs.room.runtime)
+            implementation(libs.room.ktx)
+            implementation(libs.work.runtime.ktx)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -78,4 +82,5 @@ android {
 
 dependencies {
     debugImplementation(libs.compose.uiTooling)
+    ksp(libs.room.compiler)
 }
