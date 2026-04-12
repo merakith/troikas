@@ -23,6 +23,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DividerDefaults.color
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -39,8 +42,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAbsoluteAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,7 +59,7 @@ fun ResultScreen(barcode: String?){
     Scaffold(
         topBar = {
             TopAppBar(
-                title ={ Text("Smart Grahak",color = Color.Black)},
+                title ={ Text("The Clinical Curator",color = Color.Black, fontSize = 22.sp, fontWeight = FontWeight.Normal)},
                 navigationIcon = {
                     IconButton(onClick = {}) {
                         Icon(
@@ -138,7 +144,63 @@ fun ResultScreen(barcode: String?){
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            Card(colors =CardDefaults.cardColors(containerColor = Color(0xFFD32F2F).copy(alpha = 0.08f)),
+                modifier = Modifier.padding(horizontal = 16.dp),
 
+                shape = RoundedCornerShape(12.dp)) {
+                Column(modifier = Modifier.padding(16.dp)){
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+
+                    ){
+                        Surface(shape = RoundedCornerShape(8.dp),
+                            color =Color(0xFFE74C3C).copy(alpha =0.15f)) {
+                            Icon(
+                                imageVector = Icons.Default.Warning,
+                                contentDescription = null,
+                                tint =  Color(0xFFE74C3C),//so that the label icon is red insted of black as vectors doesnt have the Color function
+                                modifier = Modifier.padding(8.dp)
+
+
+                            )
+
+
+                        }
+                        Surface(color = Color(0xFFD32F2F).copy(alpha = 0.15f),
+                            shape = RoundedCornerShape(4.dp)
+                        ) {
+                            Text("High Risk",
+                                color = Color(0xFFD32F2F),
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+
+                                )
+                        }
+
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Ingredient Name", fontWeight = FontWeight.Bold  )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Surface(
+                        shape = RoundedCornerShape(10.dp),
+                        color = Color(0xFFD32F2F),
+                        modifier = Modifier.padding(vertical = 10.dp, horizontal = 8.dp)) {
+                        Text(text ="INFLAMMATORY",
+                            color = Color.White,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(4.dp))
+
+
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text("The ingredient is shit dont eat this product ,\n" +
+                            " shitty ingredients trust me dhananjay it is just for filling",color = Color(0xFF757575),)
+
+                }
+            }
 
         }
 
