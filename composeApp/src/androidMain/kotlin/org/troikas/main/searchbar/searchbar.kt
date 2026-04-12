@@ -46,14 +46,3 @@ fun SearchBar(navController: NavController) {
     }
 }
 
-@Composable
-fun ResultScreen(barcode: String?) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 24.dp),
-        contentAlignment = Alignment.TopCenter
-    ) {
-        Text("barcode = $barcode")
-    }
-}
