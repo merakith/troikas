@@ -1,6 +1,6 @@
 package org.troikas.main.utils
 
-class IngredientParser {
+class stringParser {
     fun stringParser(rawString: String): List<String> {
         return Regex("\\((.*?)\\)")
                 .replace(rawString) { matchResult ->
