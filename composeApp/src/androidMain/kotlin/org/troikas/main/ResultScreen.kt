@@ -1,5 +1,8 @@
 package org.troikas.main
 
+
+//noinspection SuspiciousImport
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +21,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Eco
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Science
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -67,12 +75,21 @@ fun ResultScreen(barcode: String?, viewModel: ResultViewModel = viewModel()) {
                         )
                     }
                 },
+
+                actions = {
+                    IconButton(onClick = {}) {
+                        Icon(
+                            imageVector = Icons.Default.Share,
+                            contentDescription = "Share"
+                        )
+                    }
+                }
             )
         }
     ) { padding ->
         Column(
-            modifier = Modifier
-                .padding(padding)
+            modifier = Modifier.padding(padding)
+                .verticalScroll(state)
                 .fillMaxSize()
         ) {
             when (val state = uiState) {
@@ -160,43 +177,29 @@ fun ResultScreen(barcode: String?, viewModel: ResultViewModel = viewModel()) {
                             modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp)
                         ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Surface(
-                                        shape = RoundedCornerShape(8.dp),
-                                        color = Color(0xFFE74C3C).copy(alpha = 0.15f)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Warning,
-                                            contentDescription = null,
-                                            tint = Color(0xFFE74C3C),
-                                            modifier = Modifier.padding(8.dp)
-                                        )
-                                    }
-                                    Surface(
-                                        color = Color(0xFFD32F2F).copy(alpha = 0.15f),
-                                        shape = RoundedCornerShape(4.dp)
-                                    ) {
-                                        Text(
-                                            "AI INSIGHT",
-                                            color = Color(0xFFD32F2F),
-                                            fontSize = 11.sp,
-                                            fontWeight = FontWeight.Bold,
-                                        )
-                                    }
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text("Nutritionist Analysis", fontWeight = FontWeight.Bold)
-                                Spacer(modifier = Modifier.height(4.dp))
-                                
-                                Text(
-                                    state.analysis ?: "No ingredients found to analyze. Is this even food?",
-                                    color = Color(0xFF757575),
-                                )
-                            }
+                            Icon(
+                                imageVector = Icons.Default.Warning,
+                                contentDescription = null,
+                                tint = Color(0xFFE74C3C),//so that the label icon is red insted of black as vectors doesnt have the Color function
+                                modifier = Modifier.padding(8.dp)
+
+
+                            )
+
+
+                        }
+                        Surface(
+                            color = Color(0xFFD32F2F).copy(alpha = 0.15f),
+                            shape = RoundedCornerShape(4.dp)
+                        ) {
+                            Text(
+                                "High Risk",
+                                color = Color(0xFFD32F2F),
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(4.dp)
+
+                            )
                         }
                         
                         Spacer(modifier = Modifier.height(16.dp))
@@ -215,6 +218,295 @@ fun ResultScreen(barcode: String?, viewModel: ResultViewModel = viewModel()) {
                             color = Color.Gray
                         )
                     }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "The ingredient is shit dont eat this product ,\n" +
+                                " shitty ingredients trust me dhananjay it is just for filling",
+                        color = Color(0xFF757575),
+                    )
+
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Card(
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFF39C12).copy(alpha = 0.08f)),
+
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    )
+                    {
+                        Surface(
+                            shape = RoundedCornerShape(8.dp),
+                            color = Color(0xFFF39C12).copy(alpha = 0.15f)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Info,
+                                contentDescription = null,
+                                tint = Color(0xFFF39C12),
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+
+                        Surface(
+                            shape = RoundedCornerShape(4.dp),
+                            color = Color(0xFFF39C12).copy(0.15f)
+                        )
+                        {
+                            Text(
+                                text = "Moderate",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFFF39C12),
+                                modifier = Modifier.padding(4.dp)
+                            )
+                        }
+
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Sunflower Oil", fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = Color(0xFFF39C12),
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)
+                    )
+                    {
+                        Text(
+                            "PROCESSED FAT",
+                            color = Color.White,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "The ingredient is shit dont eat this product ,\n" +
+                                " shitty ingredients trust me dhananjay it is just for filling",
+                        color = Color(0xFF757575),
+                    )
+
+
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+
+
+                }
+            Card(
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFF39C12).copy(alpha = 0.08f)),
+
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    )
+                    {
+                        Surface(
+                            shape = RoundedCornerShape(8.dp),
+                            color = Color(0xFFF39C12).copy(alpha = 0.15f)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Science,
+                                contentDescription = null,
+                                tint = Color(0xFFF39C12),
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+
+                        Surface(
+                            shape = RoundedCornerShape(4.dp),
+                            color = Color(0xFFF39C12).copy(0.15f)
+                        )
+                        {
+                            Text(
+                                text = "ADDITIVE",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFFF39C12),
+                                modifier = Modifier.padding(4.dp)
+                            )
+                        }
+
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Tricalcium Phosphate", fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = Color(0xFFF39C12),
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)
+                    )
+                    {
+                        Text(
+                            "FORTIFIER",
+                            color = Color.White,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "The ingredient is shit dont eat this product ,\n" +
+                                " shitty ingredients trust me dhananjay it is just for filling",
+                        color = Color(0xFF757575),
+                    )
+
+
+                }
+
+
+
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFF116E45).copy(
+                        alpha = 0.08f
+                    )
+                ),
+
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    )
+                    {
+                        Surface(
+                            shape = RoundedCornerShape(8.dp),
+                            color = Color(0xFF116E45).copy(alpha = 0.15f)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Eco,
+                                contentDescription = null,
+                                tint = Color(0xFF116E45),
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+
+                        Surface(
+                            shape = RoundedCornerShape(4.dp),
+                            color = Color(0xFF116E45).copy(0.15f)
+                        )
+                        {
+                            Text(
+                                text = "Essential",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF116E45),
+                                modifier = Modifier.padding(4.dp)
+                            )
+                        }
+
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Whole Grain Oats", fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = Color(0xFF116E45),
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)
+                    )
+                    {
+                        Text(
+                            "whole food",
+                            color = Color.White,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "The ingredient is shit dont eat this product ,\n" +
+                                " shitty ingredients trust me dhananjay it is just for filling",
+                        color = Color(0xFF757575),
+                    )
+
+
+                }
+
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFF116E45).copy(
+                        alpha = 0.08f
+                    )
+                ),
+
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    )
+                    {
+                        Surface(
+                            shape = RoundedCornerShape(8.dp),
+                            color = Color(0xFF116E45).copy(alpha = 0.15f)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.WaterDrop,
+                                contentDescription = null,
+                                tint = Color(0xFF116E45),
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+
+                        Surface(
+                            shape = RoundedCornerShape(4.dp),
+                            color = Color(0xFF116E45).copy(0.15f)
+                        )
+                        {
+                            Text(
+                                text = "PURE",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF116E45),
+                                modifier = Modifier.padding(4.dp)
+                            )
+                        }
+
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Filtered Water", fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = Color(0xFF116E45),
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)
+                    )
+                    {
+                        Text(
+                            "HYDRATION",
+                            color = Color.White,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "The ingredient is shit dont eat this product ,\n" +
+                                " shitty ingredients trust me dhananjay it is just for filling",
+                        color = Color(0xFF757575),
+                    )
+
+
                 }
             }
         }
