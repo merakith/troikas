@@ -1,9 +1,6 @@
 package org.troikas.main
 
 
-import android.R.attr.text
-import android.graphics.drawable.Icon
-import android.service.autofill.OnClickAction
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,36 +18,25 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DividerDefaults.color
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDefaults.color
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.BiasAbsoluteAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,20 +49,12 @@ fun ResultScreen(barcode: String?){
                 navigationIcon = {
                     IconButton(onClick = {}) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
                 },
 
-                actions = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Default.Share,
-                            contentDescription = "Share"
-                        )
-                    }
-                }
             )
         }
     ){padding ->
@@ -160,13 +138,9 @@ fun ResultScreen(barcode: String?){
                             Icon(
                                 imageVector = Icons.Default.Warning,
                                 contentDescription = null,
-                                tint =  Color(0xFFE74C3C),//so that the label icon is red insted of black as vectors doesnt have the Color function
+                                tint =  Color(0xFFE74C3C), //so that the label icon is red instead of black as vectors doesn't have the Color function
                                 modifier = Modifier.padding(8.dp)
-
-
                             )
-
-
                         }
                         Surface(color = Color(0xFFD32F2F).copy(alpha = 0.15f),
                             shape = RoundedCornerShape(4.dp)
@@ -175,7 +149,6 @@ fun ResultScreen(barcode: String?){
                                 color = Color(0xFFD32F2F),
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-
                                 )
                         }
 
