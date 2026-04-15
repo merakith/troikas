@@ -21,7 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 
 @Composable
-fun BarcodeScanSearchBar(navController: NavController) {
+fun SearchBar(navController: NavController) {
     var text by remember { mutableStateOf("") }
     Box(
         modifier = Modifier.fillMaxSize(),
