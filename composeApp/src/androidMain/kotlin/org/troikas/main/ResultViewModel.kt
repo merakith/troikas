@@ -13,9 +13,9 @@ import org.troikas.main.network.ProductDetails
 sealed class ResultUiState {
     object Loading : ResultUiState()
     data class Success(
-        val product: ProductDetails,
-        val analysis: String?
+        val product: ProductDetails
     ) : ResultUiState()
+
     data class Error(val message: String) : ResultUiState()
 }
 
@@ -23,22 +23,27 @@ class ResultViewModel : ViewModel() {
     private val foodRepository = FoodRepository()
     private val geminiRepository = GeminiRepository()
 
-    private val _uiState = MutableStateFlow<ResultUiState>(ResultUiState.Loading)
-    val uiState: StateFlow<ResultUiState> = _uiState.asStateFlow()
+    private val privUiState = MutableStateFlow<ResultUiState>(ResultUiState.Loading)
+    val uiState: StateFlow<ResultUiState> = privUiState.asStateFlow()
 
     fun loadProductData(barcode: String) {
         viewModelScope.launch {
-            _uiState.value = ResultUiState.Loading
+            privUiState.value = ResultUiState.Loading
             try {
+                // try network first
                 val product = foodRepository.getProduct(barcode)
                 if (product != null) {
-                    // add the supabase query here
-                    _uiState.value = ResultUiState.Success(product, null)
+                    privUiState.value = ResultUiState.Success(product)
                 } else {
-                    _uiState.value = ResultUiState.Error("Product not found. check your internet maybe?")
+                    // fallback query supabase
+                    val dbProduct = SupabaseClient.client.from("products").select {
+                        filter { eq("barcode", barcode) }
+                    }.decodeSingle<Product>()
+
+                    privUiState.value = ResultUiState.Success(dbProduct)
                 }
             } catch (e: Exception) {
-                _uiState.value = ResultUiState.Error("Oops! " + (e.message ?: "Something went wrong"))
+                privUiState.value = ResultUiState.Error(e.message ?: "An error occurred")
             }
         }
     }
