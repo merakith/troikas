@@ -2,6 +2,7 @@ package org.troikas.main.network
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
+import kotlinx.JsonObject
 
 @Serializable
 data class Product(
