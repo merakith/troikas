@@ -28,10 +28,12 @@ class FoodRepository(private val openFoodFactsApi: FoodApi
             }
         }
     }
-    private suspend fun getProductFromSupabase(barcode: String): ProductDetails? {
+    private suspend fun getProductFromSupabase(barcode: String): Product? {
         return try {
-            // todo: supabase sdk call will go here
-            null
+            SupabaseClient.client
+                    .from("products")
+                    .select { filter { eq("barcode", barcode) } }
+                    .decodeSingle<Product>()
         } catch (e: Exception) {
             println("supabase connection failed: ${e.message}")
             null
