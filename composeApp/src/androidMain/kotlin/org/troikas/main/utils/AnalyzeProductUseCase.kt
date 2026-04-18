@@ -17,8 +17,8 @@ class AnalyzeProductUseCase(
         private val parser: stringParser
 ) {
     suspend fun execute(barcode: String): ProductUseCase? {
-        val product = foodrepo.getProduct(barcode) ?: return null
-        val rawIngredients = product.ingredientsText //convert
+        val product = foodrepo.getProductFromSupabase(barcode) ?: return null
+        val rawIngredients = product.ingredientList 
         if (rawIngredients.isNullOrEmpty()) return null
         val cleanList = parser.stringParser(rawIngredients)
         val localResults = ingredientrepo.analyzeIngredients(cleanList)
