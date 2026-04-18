@@ -28,7 +28,7 @@ class FoodRepository(private val openFoodFactsApi: FoodApi
             }
         }
     }
-    private suspend fun getProductFromSupabase(barcode: String): Product? {
+    suspend fun getProductFromSupabase(barcode: String): Product? {
         return try {
             SupabaseClient.client
                     .from("products")
