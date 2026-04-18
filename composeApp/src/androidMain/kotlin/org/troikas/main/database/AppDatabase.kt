@@ -23,12 +23,13 @@ abstract class AppDatabase : RoomDatabase() {
                     ?: synchronized(this) { // create db if instance is null
                         val instance =
                                 Room.databaseBuilder(
-                                        context.applicationContext,
-                                        AppDatabase::class.java,
-                                        "troikas_database" // name of local sql file
-                                ).build()
-                                INSTANCE=instance
-                                instance
+                                                context.applicationContext,
+                                                AppDatabase::class.java,
+                                                "troikas_database" // name of local sql file
+                                        )
+                                        .build()
+                        INSTANCE = instance
+                        instance
                     }
         }
     }
