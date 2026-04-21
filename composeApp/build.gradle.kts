@@ -1,12 +1,12 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
+    kotlin("plugin.serialization") version libs.versions.kotlin.get()
 }
 
 kotlin {
@@ -15,7 +15,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
@@ -56,10 +56,20 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
-        
-        buildConfigField("String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\"")
+        buildConfigField(
+            "String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\""
+        )
+        buildConfigField(
+            type = "String",
+            name = "SUPABASE_URL",
+            value = "\"${project.findProperty("SUPABASE_URL") ?: ""}\""
+        )
+        buildConfigField(
+            type = "String",
+            name = "SUPABASE_ANON_KEY",
+            value = "\"${project.findProperty("SUPABASE_ANON_KEY") ?: ""}\""
+        )
     }
-    
     buildFeatures {
         buildConfig = true
     }
@@ -83,4 +93,8 @@ android {
 dependencies {
     debugImplementation(libs.compose.uiTooling)
     ksp(libs.room.compiler)
+    implementation(platform("io.github.jan-tennert.supabase:bom:${libs.versions.supabase.get()}"))
+    implementation(libs.postgrest.kt)
+    implementation(libs.supabase.kt)
+    implementation("io.ktor:ktor-client-android:${libs.versions.ktor.get()}")
 }
