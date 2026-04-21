@@ -14,14 +14,15 @@ data class ProductUseCase(
 class AnalyzeProductUseCase(
         private val foodrepo: FoodRepository,
         private val ingredientrepo: IngredientRepository,
-        private val parser: stringParser
+        private val parser: StringParser
 ) {
     suspend fun execute(barcode: String): ProductUseCase? {
-        val product = foodrepo.getProductFromSupabase(barcode) ?: return null
-        val rawIngredients = product.ingredientList 
-        if (rawIngredients.isNullOrEmpty()) return null
-        val cleanList = parser.stringParser(rawIngredients)
-        val localResults = ingredientrepo.analyzeIngredients(cleanList)
-        return ProductUseCase(product, localResults)
+        val dbProduct = foodrepo.queryProduct(barcode)
+        if (dbProduct != null) {
+            val cleanList = parser.parseIngredients(dbProduct.ingredientList)
+            val localResults = ingredientrepo.analyzeIngredients(cleanList)
+            return ProductUseCase(dbProduct, localResults)
+        }
+        return null
     }
 }
