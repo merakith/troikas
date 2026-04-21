@@ -17,7 +17,18 @@ categories:
       - 'chore'
       - 'refactor'
       - 'dependencies'
-
+      
+autolabeler:
+  - label: 'feature'
+    title:
+      - '/^feat(\(.+\))?:/i'
+  - label: 'fix'
+    title:
+      - '/^fix(\(.+\))?:/i'
+  - label: 'chore'
+    title:
+      - '/^(chore|refactor|build|ci)(\(.+\))?:/i'
+      
 exclude-labels:
   - 'skip-changelog'
 
