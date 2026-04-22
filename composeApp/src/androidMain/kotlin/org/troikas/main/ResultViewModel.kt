@@ -6,22 +6,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.troikas.main.network.FoodRepository
-import org.troikas.main.network.GeminiRepository
-import org.troikas.main.network.ProductDetails
+import org.troikas.main.utils.AnalyzeProductUseCase
+import org.troikas.main.utils.ProductUseCase
 
 sealed class ResultUiState {
     object Loading : ResultUiState()
-    data class Success(
-        val product: ProductDetails
-    ) : ResultUiState()
-
+    data class Success(val product: ProductUseCase) : ResultUiState()
     data class Error(val message: String) : ResultUiState()
 }
 
-class ResultViewModel : ViewModel() {
-    private val foodRepository = FoodRepository()
-    private val geminiRepository = GeminiRepository()
+class ResultViewModel(private val analyzeProductUseCase: AnalyzeProductUseCase) : ViewModel() {
 
     private val privUiState = MutableStateFlow<ResultUiState>(ResultUiState.Loading)
     val uiState: StateFlow<ResultUiState> = privUiState.asStateFlow()
@@ -30,20 +24,14 @@ class ResultViewModel : ViewModel() {
         viewModelScope.launch {
             privUiState.value = ResultUiState.Loading
             try {
-                // try network first
-                val product = foodRepository.getProduct(barcode)
+                val product = analyzeProductUseCase.execute(barcode)
                 if (product != null) {
                     privUiState.value = ResultUiState.Success(product)
                 } else {
-                    // fallback query supabase
-                    val dbProduct = SupabaseClient.client.from("products").select {
-                        filter { eq("barcode", barcode) }
-                    }.decodeSingle<Product>()
-
-                    privUiState.value = ResultUiState.Success(dbProduct)
+                    privUiState.value = ResultUiState.Error("Product not found in any database")
                 }
             } catch (e: Exception) {
-                privUiState.value = ResultUiState.Error(e.message ?: "An error occurred")
+                privUiState.value = ResultUiState.Error(e.message ?: "An unknown error occurred")
             }
         }
     }
