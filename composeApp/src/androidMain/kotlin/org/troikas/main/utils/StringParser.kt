@@ -1,7 +1,7 @@
 package org.troikas.main.utils
 
-class stringParser {
-    fun stringParser(rawString: String): List<String> {
+class StringParser {
+    fun execute(rawString: String): List<String> {
         return Regex("\\((.*?)\\)")
                 .replace(rawString) { matchResult ->
                     val textInside =
