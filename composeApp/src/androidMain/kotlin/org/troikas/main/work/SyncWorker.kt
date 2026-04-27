@@ -10,14 +10,16 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) :
         CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result {
         return try {
-            println("WorkManager: Waking up to sync OpenFoodFacts & Supabase data...")
-            val database = AppDatabase.getDatabase(applicationContext) // get singleton db instance
-            val repo = IngredientRepository(database.ingredientDao()) // get dao and pass it to repo
+            val database = AppDatabase.getDatabase(applicationContext)
+            // manual injection: passing dao to repository
+            val repo =
+                    IngredientRepository(
+                            ingredientDao = database.ingredientDao(),
+                            supabase = org.troikas.main.network.SupabaseClient.client
+                    )
             repo.syncWithCloud()
-            println("WorkManager: Sync completed successfully.")
             Result.success()
         } catch (e: Exception) {
-            println("WorkManager: sync failed- ${e.message}")
             Result.retry()
         }
     }
