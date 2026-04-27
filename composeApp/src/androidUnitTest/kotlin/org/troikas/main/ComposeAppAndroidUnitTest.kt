@@ -31,13 +31,13 @@ class DatabaseIntegrationTest {
     @Test
     fun testSupabaseConnection() = runBlocking {
         try {
-            // Try to fetch just 1 row from your ingredients table
-            val response = SupabaseClient.client.postgrest["ingredients"]
+            // Try to fetch just 1 row from your products table
+            val response = SupabaseClient.client.postgrest["products"]
                 .select {
                     limit(1)
                 }
             
-            assertNotNull(response, "Error: Could not connect to Supabase ingredients table!")
+            assertNotNull(response, "Error: Could not connect to Supabase products table!")
             println("Supabase connection successful.")
         } catch (e: Exception) {
             println("Supabase Test Failed: ${e.message}")
