@@ -13,7 +13,8 @@ class FoodRepository() {
                     filter {
                         eq("barcode", barcode)
                     }
-                }.decodeSingle<Product>()
+                }.decodeList<Product>()
+                    .firstOrNull()
             } catch (e: Exception) {
                 Log.d("FoodRepository", "Supabase query failed: ${e.message}")
                 null
