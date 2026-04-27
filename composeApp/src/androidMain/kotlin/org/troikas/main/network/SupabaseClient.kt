@@ -6,9 +6,9 @@ import io.github.jan.supabase.postgrest.Postgrest
 import org.troikas.main.BuildConfig
 
 object SupabaseClient {
-    val client: SupabaseClient = createSupabaseClient(
-        supabaseUrl = BuildConfig.SUPABASE_URL, supabaseKey = BuildConfig.SUPABASE_ANON_KEY
-    ) {
-        install(Postgrest)
-    }
+    val client: SupabaseClient =
+            createSupabaseClient(
+                    supabaseUrl = BuildConfig.SUPABASE_URL,
+                    supabaseKey = BuildConfig.SUPABASE_ANON_KEY
+            ) { install(Postgrest) }
 }
