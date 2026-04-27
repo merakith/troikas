@@ -1,27 +1,47 @@
-//package org.troikas.main
-//
-//import kotlinx.coroutines.runBlocking
-//import org.troikas.main.network.FoodRepository
-//import kotlin.test.Test
-//import kotlin.test.assertNotNull
-//import kotlin.test.assertNull
-//
-//class ComposeAppAndroidUnitTest {
-//    @Test
-//    fun testValidBarcode() {
-//        runBlocking {
-//            val repo = FoodRepository()
-//            val barcode = "8904063230010" // Haldiram's Bhujia (400g)
-//            assertNotNull(repo.getProduct(barcode), "Error: Product info was not received!")
-//        }
-//    }
-//
-//    @Test
-//    fun testInvalidBarcode() {
-//        runBlocking {
-//            val repo = FoodRepository()
-//            val barcode = "0000000000"
-//            assertNull(repo.getProduct(barcode), "Error: Invalid product exists?")
-//        }
-//    }
-//}
+package org.troikas.main
+
+import io.github.jan.supabase.postgrest.postgrest
+import kotlinx.coroutines.runBlocking
+import org.troikas.main.network.FoodRepository
+import org.troikas.main.network.SupabaseClient
+import kotlin.test.Test
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
+
+class DatabaseIntegrationTest {
+
+    // 1. Test the Food API (OpenFoodFacts)
+    @Test
+    fun testDietCokeLookup() = runBlocking {
+        val repo = FoodRepository()
+        // Barcode for Diet Coke
+        val barcode = "8901764061257" 
+        
+        // Use the function name you have in your FoodRepository (queryProduct)
+        val product = repo.queryProduct(barcode)
+        
+        assertNotNull(product, "Error: Diet Coke not found in OpenFoodFacts!")
+        assertTrue(
+            product.productName?.contains("Coke", ignoreCase = true) == true, 
+            "Error: Product found but name doesn't match Coke"
+        )
+    }
+
+    // 2. Test the Supabase Connection
+    @Test
+    fun testSupabaseConnection() = runBlocking {
+        try {
+            // Try to fetch just 1 row from your ingredients table
+            val response = SupabaseClient.client.postgrest["ingredients"]
+                .select {
+                    limit(1)
+                }
+            
+            assertNotNull(response, "Error: Could not connect to Supabase ingredients table!")
+            println("Supabase connection successful.")
+        } catch (e: Exception) {
+            println("Supabase Test Failed: ${e.message}")
+            throw e
+        }
+    }
+}
