@@ -174,7 +174,7 @@ fun IngredientCard(item: IngredientClassification) {
 fun ResultScreen(
     barcode: String?,
     navController: NavController,
-    viewModel: ResultViewModel = viewModel()
+    viewModel: ResultViewModel = viewModel(factory=ResultViewModelFactory(androidx.compose.ui.platform.LocalContext.current))
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
