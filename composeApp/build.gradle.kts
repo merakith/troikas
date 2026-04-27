@@ -97,4 +97,6 @@ dependencies {
     implementation(libs.postgrest.kt)
     implementation(libs.supabase.kt)
     implementation("io.ktor:ktor-client-android:${libs.versions.ktor.get()}")
+    implementation("io.ktor:ktor-client-core:${libs.versions.ktor.get()}")
+
 }
