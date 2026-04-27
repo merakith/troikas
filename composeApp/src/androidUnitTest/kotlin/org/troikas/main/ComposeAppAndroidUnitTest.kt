@@ -22,7 +22,7 @@ class DatabaseIntegrationTest {
         
         assertNotNull(product, "Error: Diet Coke not found in OpenFoodFacts!")
         assertTrue(
-            product.productName?.contains("Coke", ignoreCase = true) == true, 
+            product.name?.contains("Coke", ignoreCase = true) == true, 
             "Error: Product found but name doesn't match Coke"
         )
     }
