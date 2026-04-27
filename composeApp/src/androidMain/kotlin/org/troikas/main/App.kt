@@ -24,7 +24,7 @@ fun App() {
             }
             composable("result/{barcode}") { backStackEntry ->
                 val barcode = backStackEntry.arguments?.getString("barcode")
-                ResultScreen(barcode)
+                ResultScreen(barcode,navController)
             }
         }
     }

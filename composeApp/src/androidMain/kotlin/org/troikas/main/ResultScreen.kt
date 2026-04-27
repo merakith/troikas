@@ -4,6 +4,7 @@ package org.troikas.main
 //noinspection SuspiciousImport
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,10 +45,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResultScreen(barcode: String?) {
+fun ResultScreen(barcode: String?,navController: NavController) {
     val state = rememberScrollState()
     Scaffold(
         topBar = {
@@ -61,10 +63,12 @@ fun ResultScreen(barcode: String?) {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {navController.popBackStack()}) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Back",
+
+
                         )
                     }
                 },
@@ -74,6 +78,7 @@ fun ResultScreen(barcode: String?) {
                         Icon(
                             imageVector = Icons.Default.Share,
                             contentDescription = "Share"
+
                         )
                     }
                 }
