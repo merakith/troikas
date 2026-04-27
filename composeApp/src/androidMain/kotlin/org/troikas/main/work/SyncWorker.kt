@@ -12,11 +12,7 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) :
         return try {
             val database = AppDatabase.getDatabase(applicationContext)
             // manual injection: passing dao to repository
-            val repo =
-                    IngredientRepository(
-                            ingredientDao = database.ingredientDao(),
-                            supabase = org.troikas.main.network.SupabaseClient.client
-                    )
+            val repo = IngredientRepository(database.ingredientDao())
             repo.syncWithCloud()
             Result.success()
         } catch (e: Exception) {

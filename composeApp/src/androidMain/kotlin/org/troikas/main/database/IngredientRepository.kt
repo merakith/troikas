@@ -3,11 +3,10 @@ package org.troikas.main.database
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.troikas.main.network.SupabaseClient
 
 class IngredientRepository(
         private val ingredientDao: IngredientDao,
-        private val supabase: io.github.jan.supabase.SupabaseClient = SupabaseClient.client
+        private val supabase: io.github.jan.supabase.SupabaseClient = org.troikas.main.network.SupabaseClient.client
 ) {
     suspend fun analyzeIngredients(cleanedNames: List<String>): List<IngredientClassification> {
         return withContext(Dispatchers.IO) { ingredientDao.getClassifications(cleanedNames) }
