@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -45,12 +46,15 @@ kotlin {
         }
     }
 }
-
+val localProps = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
 android {
     namespace = "org.troikas.main"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
+
         applicationId = "org.troikas.main"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
@@ -62,12 +66,12 @@ android {
         buildConfigField(
             type = "String",
             name = "SUPABASE_URL",
-            value = "\"${project.findProperty("SUPABASE_URL") ?: ""}\""
+            value = "\"${localProps["SUPABASE_URL"] ?: ""}\""
         )
         buildConfigField(
             type = "String",
             name = "SUPABASE_ANON_KEY",
-            value = "\"${project.findProperty("SUPABASE_ANON_KEY") ?: ""}\""
+            value = "\"${localProps["SUPABASE_ANON_KEY"] ?: ""}\""
         )
     }
     buildFeatures {

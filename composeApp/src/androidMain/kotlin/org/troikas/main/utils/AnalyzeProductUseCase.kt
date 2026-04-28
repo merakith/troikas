@@ -19,7 +19,7 @@ class AnalyzeProductUseCase(
     suspend fun execute(barcode: String): ProductUseCase? {
         val dbProduct = foodrepo.queryProduct(barcode)
         if (dbProduct != null) {
-            val cleanList = parser.execute(dbProduct.ingredientList)
+            val cleanList = parser.execute(dbProduct.ingredientList?: "")
             val localResults = ingredientrepo.analyzeIngredients(cleanList)
             return ProductUseCase(dbProduct, localResults)
         }

@@ -12,9 +12,9 @@ interface IngredientDao{
     fun insertIngredients(ingredients: List<IngredientClassification>): List<Long>
 
     // takes a list and returns only matching rows
-    @Query("SELECT * FROM ingredient_classification WHERE name IN (:ingredientNames)")
+    @Query("SELECT * FROM ingredients WHERE name IN (:ingredientNames)")
     fun getClassifications(ingredientNames: List<String>): List<IngredientClassification>
 
-    @Query("SELECT MAX(updatedAt) FROM ingredient_classification")
+    @Query("SELECT MAX(updatedAt) FROM ingredients")
     fun getLastUpdatedAt(): String?
 }

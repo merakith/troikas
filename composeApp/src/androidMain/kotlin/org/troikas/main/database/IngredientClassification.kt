@@ -15,7 +15,7 @@ enum class Category{
 
 //this creates the actual SQLite table on the phone
 @Serializable
-@Entity(tableName="ingredient_classification")
+@Entity(tableName="ingredients")
 data class IngredientClassification(
     @PrimaryKey
     val name: String,

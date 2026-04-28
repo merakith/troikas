@@ -181,6 +181,7 @@ fun ResultScreen(
     val scrollState = rememberScrollState()
 
     LaunchedEffect(barcode) {
+        println("DEBUG barcode received: $barcode")
         if (!barcode.isNullOrEmpty()) {
             viewModel.loadProductData(barcode)
         }
