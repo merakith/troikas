@@ -17,6 +17,7 @@ class AnalyzeProductUseCase(
         val dbProduct = foodrepo.queryProduct(barcode) ?: return null
 
         val cleanList = parser.execute(dbProduct.ingredientList ?: "")
+        println("DEBUG: Scanned Ingredients: $cleanList") // CHECK 
 
         var localResults = ingredientrepo.analyzeIngredients(cleanList)
         if (localResults.isEmpty()) {
@@ -40,6 +41,7 @@ class AnalyzeProductUseCase(
                         android.util.Log.e("AnalyzeUseCase", "Supabase Error: ${e.message}")
                         emptyList()
                     }
+                    
         }
 
         println("DEBUG: Found ${localResults.size} matches to show.")
