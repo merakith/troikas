@@ -9,7 +9,7 @@ import androidx.room.TypeConverters
 // config
 @Database(
     entities = [IngredientClassification::class], // register tables here
-    version = 1, // if we add another column, we change this
+    version = 2, // if we add another column, we change this
     exportSchema = false // shuts up the compiler about missing schema folders
 )
 
@@ -29,7 +29,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "troikas_database" // name of local sql file
-                ).build()
+                )
+                .fallbackToDestructiveMigration()
+                .build()
                 INSTANCE = instance
                 instance
             }
