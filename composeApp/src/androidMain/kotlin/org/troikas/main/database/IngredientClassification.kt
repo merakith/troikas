@@ -8,9 +8,9 @@ import kotlinx.serialization.SerialName
 
 @Serializable
 enum class Category{
-    HEALTHY,
-    MODERATE,
-    AVOID
+    healthy,
+    moderate,
+    avoid
 }
 
 //this creates the actual SQLite table on the phone
