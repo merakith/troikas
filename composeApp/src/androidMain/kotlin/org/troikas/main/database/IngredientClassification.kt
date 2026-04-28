@@ -21,7 +21,7 @@ data class IngredientClassification(
     val name: String,
     val category: Category,
     val reason: String,
-    val synonyms:List<String>=emptyList(),
+    val synonyms:List<String> = emptyList(),
     @SerialName("updated_at")
     @androidx.room.ColumnInfo(name = "updated_at") 
     val updatedAt: String?=null, // Format of timestamp: yyyy-MM-dd HH:mm:ss.SSSSSS UTC time
