@@ -16,5 +16,5 @@ interface IngredientDao{
     fun getClassifications(ingredientNames: List<String>): List<IngredientClassification>
 
     @Query("SELECT MAX(updated_at) FROM ingredients")
-    suspend fun getLastUpdatedAt(): String?
+    fun getLastUpdatedAt(): String?
 }

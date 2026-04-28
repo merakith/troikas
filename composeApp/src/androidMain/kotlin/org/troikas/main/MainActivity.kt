@@ -13,6 +13,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         SyncScheduler.scheduleDailySync(applicationContext)
+        val db = AppDatabase.getDatabase(applicationContext)
+        val repo = IngredientRepository(db.ingredientDao())
+        
+        lifecycleScope.launch {
+            println("DEBUG: Manual Sync Starting...")
+            repo.syncWithCloud()
+            println("DEBUG: Manual Sync Finished.")
+        }
         setContent {
             App()
         }

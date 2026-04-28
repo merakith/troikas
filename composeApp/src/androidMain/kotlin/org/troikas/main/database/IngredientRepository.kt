@@ -17,7 +17,7 @@ class IngredientRepository(
             try {
                 val lastSync = ingredientDao.getLastUpdatedAt() ?: "1970-01-01T00:00:00Z"
                 val response =
-                        supabase.postgrest["ingredient_classification"]
+                        supabase.postgrest["ingredients"]
                                 .select {
                                     filter {
                                         gt("updated_at", lastSync) // greater than last sync time
