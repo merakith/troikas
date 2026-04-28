@@ -6,6 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import org.troikas.main.database.AppDatabase
+import org.troikas.main.database.IngredientRepository
 import org.troikas.main.work.SyncScheduler
 
 class MainActivity : ComponentActivity() {
