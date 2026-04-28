@@ -1,5 +1,6 @@
 package org.troikas.main.utils
 
+import io.github.jan.supabase.postgrest.from
 import org.troikas.main.database.IngredientClassification
 import org.troikas.main.database.IngredientRepository
 import org.troikas.main.network.FoodRepository
