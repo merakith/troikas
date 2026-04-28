@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -46,9 +45,20 @@ kotlin {
         }
     }
 }
-val localProps = Properties().apply {
-    load(rootProject.file("local.properties").inputStream())
+val localProps = java.util.Properties()
+val localPropsFile = rootProject.file("local.properties")
+
+if (localPropsFile.exists()) {
+    localPropsFile.inputStream().use { localProps.load(it) }
 }
+
+// Helper function to get the key from local.properties OR Environment Variables
+fun getSecret(key: String): String {
+    return (localProps[key] as? String) 
+        ?: System.getenv(key) 
+        ?: ""
+}
+
 android {
     namespace = "org.troikas.main"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -64,14 +74,14 @@ android {
             "String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\""
         )
         buildConfigField(
-            type = "String",
-            name = "SUPABASE_URL",
-            value = "\"${localProps["SUPABASE_URL"] ?: ""}\""
+            "String", 
+            "SUPABASE_URL", 
+            "\"${getSecret("SUPABASE_URL")}\""
         )
         buildConfigField(
-            type = "String",
-            name = "SUPABASE_ANON_KEY",
-            value = "\"${localProps["SUPABASE_ANON_KEY"] ?: ""}\""
+            "String", 
+            "SUPABASE_ANON_KEY", 
+            "\"${getSecret("SUPABASE_ANON_KEY")}\""
         )
     }
     buildFeatures {
