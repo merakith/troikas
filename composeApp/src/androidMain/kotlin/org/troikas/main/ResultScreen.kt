@@ -68,6 +68,11 @@ fun categoryRiskLabel(category: Category): String = when (category) {
     Category.moderate -> "MODERATE"
     Category.healthy  -> "GOOD"
 }
+fun categoryTagLabel(category: Category): String = when(category){
+    Category.avoid ->  "HARMFUL"
+    Category.moderate -> "SPARSE CONSUMPTION"
+    Category.healthy -> "BENEFICIAL"
+}
 
 // ── Section Header ────────────────────────────────────────────────────────────
 @Composable
@@ -100,7 +105,7 @@ fun IngredientCard(item: IngredientClassification) {
     val color = categoryColor(item.category)
     val icon  = categoryIcon(item.category)
     val risk  = categoryRiskLabel(item.category)
-
+    val tag = categoryTagLabel(item.category)
     Card(
         colors = CardDefaults.cardColors(
             containerColor = color.copy(alpha = 0.08f)
@@ -151,7 +156,7 @@ fun IngredientCard(item: IngredientClassification) {
                 color = color
             ) {
                 Text(
-                    item.reason.uppercase(),
+                    tag,
                     color = Color.White,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
