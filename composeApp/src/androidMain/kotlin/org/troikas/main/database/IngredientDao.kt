@@ -9,11 +9,11 @@ import androidx.room.Query
 interface IngredientDao{
     // Sync tool;if supabase sends an ingredient we already have, replace it
     @Insert(onConflict=OnConflictStrategy.REPLACE)
-    suspend fun insertIngredients(ingredients: List<IngredientClassification>): List<Long>
+    fun insertIngredients(ingredients: List<IngredientClassification>): List<Long>
 
     // takes a list and returns only matching rows
     @Query("SELECT * FROM ingredients WHERE name IN (:ingredientNames)")
-    suspend fun getClassifications(ingredientNames: List<String>): List<IngredientClassification>
+    fun getClassifications(ingredientNames: List<String>): List<IngredientClassification>
 
     //@Query("SELECT MAX(updated_at) FROM ingredients")
     //suspend fun getLastUpdatedAt(): String?
