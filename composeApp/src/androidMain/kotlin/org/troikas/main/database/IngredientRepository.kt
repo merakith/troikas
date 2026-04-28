@@ -15,14 +15,10 @@ class IngredientRepository(
     suspend fun syncWithCloud() {
         withContext(Dispatchers.IO) {
             try {
-                val lastSync = ingredientDao.getLastUpdatedAt() ?: "1970-01-01T00:00:00Z"
+                // val lastSync = ingredientDao.getLastUpdatedAt() ?: "1970-01-01T00:00:00Z"
                 val response =
                         supabase.postgrest["ingredient_classification"]
-                                .select {
-                                    filter {
-                                        gt("updated_at", lastSync) // greater than last sync time
-                                    }
-                                }
+                                .select()
                                 .decodeList<IngredientClassification>()
                 if (response.isNotEmpty()) {
                     ingredientDao.insertIngredients(response)

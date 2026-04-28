@@ -15,6 +15,6 @@ interface IngredientDao{
     @Query("SELECT * FROM ingredients WHERE name IN (:ingredientNames)")
     suspend fun getClassifications(ingredientNames: List<String>): List<IngredientClassification>
 
-    @Query("SELECT MAX(updated_at) FROM ingredients")
-    suspend fun getLastUpdatedAt(): String?
+    //@Query("SELECT MAX(updated_at) FROM ingredients")
+    //suspend fun getLastUpdatedAt(): String?
 }
