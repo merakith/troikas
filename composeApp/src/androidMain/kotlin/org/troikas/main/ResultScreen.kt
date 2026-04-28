@@ -52,21 +52,21 @@ import org.troikas.main.database.IngredientClassification
 
 // ── Helper functions ──────────────────────────────────────────────────────────
 fun categoryColor(category: Category): Color = when (category) {
-    Category.AVOID    -> Color(0xFFD32F2F)
-    Category.MODERATE -> Color(0xFFF39C12)
-    Category.HEALTHY  -> Color(0xFF116E45)
+    Category.avoid    -> Color(0xFFD32F2F)
+    Category.moderate -> Color(0xFFF39C12)
+    Category.healthy  -> Color(0xFF116E45)
 }
 
 fun categoryIcon(category: Category): ImageVector = when (category) {
-    Category.AVOID    -> Icons.Default.Warning
-    Category.MODERATE -> Icons.Default.Info
-    Category.HEALTHY  -> Icons.Default.CheckCircle
+    Category.avoid    -> Icons.Default.Warning
+    Category.moderate -> Icons.Default.Info
+    Category.healthy  -> Icons.Default.CheckCircle
 }
 
 fun categoryRiskLabel(category: Category): String = when (category) {
-    Category.AVOID    -> "HIGH RISK"
-    Category.MODERATE -> "MODERATE"
-    Category.HEALTHY  -> "GOOD"
+    Category.avoid    -> "HIGH RISK"
+    Category.moderate -> "MODERATE"
+    Category.healthy  -> "GOOD"
 }
 
 // ── Section Header ────────────────────────────────────────────────────────────
@@ -324,9 +324,9 @@ fun ResultScreen(
                     Spacer(Modifier.height(16.dp))
 
                     // Split classifications by category
-                    val avoid    = product.classification.filter { it.category == Category.AVOID }
-                    val moderate = product.classification.filter { it.category == Category.MODERATE }
-                    val healthy  = product.classification.filter { it.category == Category.HEALTHY }
+                    val avoid    = product.classification.filter { it.category == Category.avoid }
+                    val moderate = product.classification.filter { it.category == Category.moderate }
+                    val healthy  = product.classification.filter { it.category == Category.healthy }
 
                     if (avoid.isNotEmpty()) {
                         SectionHeader("Ingredients to Avoid", Color(0xFFD32F2F))
