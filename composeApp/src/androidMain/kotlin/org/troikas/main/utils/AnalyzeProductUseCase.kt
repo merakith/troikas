@@ -24,33 +24,20 @@ class AnalyzeProductUseCase(
             localResults =
                     try {
                         // Fetch everything from the ingredients table
-                        val allIngredients =
-                                SupabaseClient.client
-                                        .from("ingredients")
-                                        .select()
-                                        .decodeList<IngredientClassification>()
 
-                        println("DEBUG: Total ingredients in Cloud: ${allIngredients.size}")
-
-                        // Match them in Kotlin (Case-insensitive)
-                        allIngredients.filter { cloudItem ->
-                            val nameMatch =
-                                    cleanList.any { it.equals(cloudItem.name, ignoreCase = true) }
-                            val synonymMatch =
-                                    cleanList.any { searchName ->
-                                        cloudItem.synonyms?.contains(
-                                                searchName,
-                                                ignoreCase = true
-                                        ) == true
+                        SupabaseClient.client
+                                .from("ingredients")
+                                .select {
+                                    filter {
+                                        or {
+                                            isIn("name", cleanList)
+                                            overlaps("synonyms", cleanList)
+                                        }
                                     }
-                            nameMatch || synonymMatch
-                        }
+                                }
+                                .decodeList<IngredientClassification>()
                     } catch (e: Exception) {
-                        android.util.Log.e(
-                                "AnalyzeUseCase",
-                                "Supabase Error: ${e.stackTraceToString()}"
-                        )
-                        println("DEBUG: FULL ERROR: ${e.message}")
+                        android.util.Log.e("AnalyzeUseCase", "Supabase Error: ${e.message}")
                         emptyList()
                     }
         }
