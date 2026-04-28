@@ -4,12 +4,9 @@ import org.troikas.main.database.IngredientClassification
 import org.troikas.main.database.IngredientRepository
 import org.troikas.main.network.FoodRepository
 import org.troikas.main.network.Product
+import org.troikas.main.network.SupabaseClient
 
-
-data class ProductUseCase(
-    val product: Product,
-    val classification: List<IngredientClassification>
-)
+data class ProductUseCase(val product: Product, val classification: List<IngredientClassification>)
 
 class AnalyzeProductUseCase(
         private val foodrepo: FoodRepository,
@@ -17,12 +14,48 @@ class AnalyzeProductUseCase(
         private val parser: StringParser
 ) {
     suspend fun execute(barcode: String): ProductUseCase? {
-        val dbProduct = foodrepo.queryProduct(barcode)
-        if (dbProduct != null) {
-            val cleanList = parser.execute(dbProduct.ingredientList?: "")
-            val localResults = ingredientrepo.analyzeIngredients(cleanList)
-            return ProductUseCase(dbProduct, localResults)
+        val dbProduct = foodrepo.queryProduct(barcode) ?: return null
+
+        val cleanList = parser.execute(dbProduct.ingredientList ?: "")
+
+        var localResults = ingredientrepo.analyzeIngredients(cleanList)
+        if (localResults.isEmpty()) {
+            println("DEBUG: Local DB empty, fetching all from Supabase fallback...")
+            localResults =
+                    try {
+                        // Fetch everything from the ingredients table
+                        val allIngredients =
+                                SupabaseClient.client
+                                        .from("ingredients")
+                                        .select()
+                                        .decodeList<IngredientClassification>()
+
+                        println("DEBUG: Total ingredients in Cloud: ${allIngredients.size}")
+
+                        // Match them in Kotlin (Case-insensitive)
+                        allIngredients.filter { cloudItem ->
+                            val nameMatch =
+                                    cleanList.any { it.equals(cloudItem.name, ignoreCase = true) }
+                            val synonymMatch =
+                                    cleanList.any { searchName ->
+                                        cloudItem.synonyms?.contains(
+                                                searchName,
+                                                ignoreCase = true
+                                        ) == true
+                                    }
+                            nameMatch || synonymMatch
+                        }
+                    } catch (e: Exception) {
+                        android.util.Log.e(
+                                "AnalyzeUseCase",
+                                "Supabase Error: ${e.stackTraceToString()}"
+                        )
+                        println("DEBUG: FULL ERROR: ${e.message}")
+                        emptyList()
+                    }
         }
-        return null
+
+        println("DEBUG: Found ${localResults.size} matches to show.")
+        return ProductUseCase(dbProduct, localResults)
     }
 }
