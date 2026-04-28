@@ -20,7 +20,7 @@ class AnalyzeProductUseCase(
         val cleanList = parser.execute(dbProduct.ingredientList ?: "")
         println("DEBUG: Scanned Ingredients: $cleanList") // CHECK 
 
-        var localResults = ingredientrepo.analyzeIngredients(cleanList)
+        var localResults = ingredientrepo.getFuzzyClassification(cleanList)
         if (localResults.isEmpty()) {
             println("DEBUG: Local DB empty, fetching all from Supabase fallback...")
             localResults =

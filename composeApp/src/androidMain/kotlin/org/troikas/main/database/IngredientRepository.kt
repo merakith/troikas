@@ -12,6 +12,20 @@ class IngredientRepository(
         return withContext(Dispatchers.IO) { ingredientDao.getClassifications(cleanedNames) }
     }
 
+    suspend fun getFuzzyClassification(scannedNames: List<String>): List<IngredientClassification>{
+        return withContext(Dispatchers.IO){
+            val allLocal=ingredientDao.getAllIngredients()
+            allLocal.filter { localItem->
+                val nameMatch=scannedNames.any{ it.equals(localItem.name,ignoreCase=true)
+                }
+                val synonymMatch=(localItem.synonyms?:emptyList()).any{syn->
+                    scannedNames.any{it.equals(syn, ignoreCase = true)
+                    }
+                }
+                nameMatch||synonymMatch
+            }
+        }
+    }
     suspend fun syncWithCloud() {
         withContext(Dispatchers.IO) {
             try {

@@ -11,6 +11,9 @@ interface IngredientDao{
     @Insert(onConflict=OnConflictStrategy.REPLACE)
     fun insertIngredients(ingredients: List<IngredientClassification>): List<Long>
 
+    @Query("SELECT * from ingredients")
+    fun getAllIngredients(): List<IngredientClassification>
+
     // takes a list and returns only matching rows
     @Query("SELECT * FROM ingredients WHERE name IN (:ingredientNames)")
     fun getClassifications(ingredientNames: List<String>): List<IngredientClassification>
