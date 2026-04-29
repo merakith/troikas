@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.troikas.main.searchbar.SearchBar
+import org.troikas.main.ResultScreen
 
 
 @Composable
@@ -19,7 +20,7 @@ fun App() {
             startDestination = "search"
         ) {
             composable("search") {
-                SearchBar(navController)
+               SearchBar(navController)
             }
             composable("result/{barcode}") { backStackEntry ->
                 val barcode = backStackEntry.arguments?.getString("barcode")
