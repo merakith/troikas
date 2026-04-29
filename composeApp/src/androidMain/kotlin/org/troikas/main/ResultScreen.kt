@@ -262,7 +262,23 @@ fun ResultScreen(
                 is ResultUiState.Success -> {
                     val product = state.product
 
+
+                    val Avoid = product.classification.filter {it.category == Category.avoid }
+                    val Moderate = product.classification.filter {it.category == Category.moderate }
+
+                    val Healthy = product.classification.filter {it.category == Category.healthy }
+
+                    val healthScore = (100 - (Avoid.size*15) -(Moderate.size*15) - minOf(Healthy.size*2,10)).coerceIn(0,100)
+                    val (scoreColor,scoreLabel) = when{
+                        healthScore >= 75 -> Color(0xFF2ECC71) to "Excellent"
+                        healthScore >= 50 -> Color(0xFFF39C12) to "Good"
+                        healthScore >= 25 -> Color(0xFFE67E22) to "Poor"
+                        else -> Color(0xFFD32F2F) to "Harmful"
+
+
+                    }
                     Spacer(Modifier.height(8.dp))
+
 
                     // Purple product header
                     Box(
@@ -315,13 +331,13 @@ fun ResultScreen(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Text(
-                                        "88",
+                                        healthScore.toString(),
                                         color = Color.White,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }
                                 Spacer(Modifier.width(10.dp))
-                                Text("Health Score: Excellent", color = Color.White)
+                                Text("Health Score: $scoreLabel ", color = Color.White)
                             }
                         }
                     }
