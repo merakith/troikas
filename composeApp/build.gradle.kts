@@ -1,19 +1,19 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
-val localProperties = java.util.Properties()
-val localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-    localProperties.load(localPropertiesFile.inputStream())
-}
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlinSerialization) 
+    alias(libs.plugins.kotlinSerialization)
+}
+
+val secretsProperties = org.jetbrains.kotlin.konan.properties.Properties()
+val secretsFile = rootProject.file("secret.properties")
+if (secretsFile.exists()) {
+    secretsFile.inputStream().use { secretsProperties.load(it) }
 }
 
 kotlin {
@@ -69,11 +69,11 @@ android {
             "String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\""
         )
 
-        val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: ""
-        val supabaseKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: ""
+        buildConfigField("String", "SUPABASE_URL",
+            "\"${secretsProperties.getProperty("SUPABASE_URL") ?: ""}\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY",
+            "\"${secretsProperties.getProperty("SUPABASE_ANON_KEY") ?: ""}\"")
 
-        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
-        buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseKey\"")
     }
     buildFeatures {
         buildConfig = true
