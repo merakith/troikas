@@ -73,7 +73,6 @@ android {
 
         buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseKey\"")
-        )
     }
     buildFeatures {
         buildConfig = true
