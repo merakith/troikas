@@ -13,7 +13,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
-    kotlin("plugin.serialization") 
+    alias(libs.plugins.kotlinSerialization) 
 }
 
 kotlin {
