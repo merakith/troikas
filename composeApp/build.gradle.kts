@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -6,13 +7,20 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
-    kotlin("plugin.serialization") version libs.versions.kotlin.get()
+    alias(libs.plugins.kotlinSerialization)
+}
+
+val secretsProperties = org.jetbrains.kotlin.konan.properties.Properties()
+val secretsFile = rootProject.file("secret.properties")
+if (secretsFile.exists()) {
+    secretsFile.inputStream().use { secretsProperties.load(it) }
 }
 
 kotlin {
     androidTarget {
+        @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         }
     }
 
@@ -61,14 +69,11 @@ android {
             "String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\""
         )
 
-        buildConfigField(
-            "String", "SUPABASE_URL",
-            "\"${project.findProperty("SUPABASE_URL") ?: ""}\""
-        )
-        buildConfigField(
-            "String", "SUPABASE_ANON_KEY",
-            "\"${project.findProperty("SUPABASE_ANON_KEY") ?: ""}\""
-        )
+        buildConfigField("String", "SUPABASE_URL",
+            "\"${secretsProperties.getProperty("SUPABASE_URL") ?: ""}\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY",
+            "\"${secretsProperties.getProperty("SUPABASE_ANON_KEY") ?: ""}\"")
+
     }
     buildFeatures {
         buildConfig = true
