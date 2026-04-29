@@ -1,4 +1,11 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
+
+val localProperties = java.util.Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -61,13 +68,11 @@ android {
             "String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\""
         )
 
-        buildConfigField(
-            "String", "SUPABASE_URL",
-            "\"${project.findProperty("SUPABASE_URL") ?: ""}\""
-        )
-        buildConfigField(
-            "String", "SUPABASE_ANON_KEY",
-            "\"${project.findProperty("SUPABASE_ANON_KEY") ?: ""}\""
+        val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: ""
+        val supabaseKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: ""
+
+        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseKey\"")
         )
     }
     buildFeatures {
