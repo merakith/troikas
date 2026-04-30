@@ -263,12 +263,12 @@ fun ResultScreen(
                     val product = state.product
 
 
-                    val Avoid = product.classification.filter {it.category == Category.avoid }
-                    val Moderate = product.classification.filter {it.category == Category.moderate }
+                    val avoid = product.classification.filter {it.category == Category.avoid }
+                    val moderate = product.classification.filter {it.category == Category.moderate }
 
-                    val Healthy = product.classification.filter {it.category == Category.healthy }
+                    val healthy = product.classification.filter {it.category == Category.healthy }
 
-                    val healthScore = (100 - (Avoid.size*15) -(Moderate.size*15) - minOf(Healthy.size*2,10)).coerceIn(0,100)
+                    val healthScore = (100 - (avoid.size*15) -(moderate.size*15) - minOf(healthy.size*2,10)).coerceIn(0,100)
                     val (scoreColor,scoreLabel) = when{
                         healthScore >= 75 -> Color(0xFF2ECC71) to "Excellent"
                         healthScore >= 50 -> Color(0xFFF39C12) to "Good"
@@ -341,11 +341,6 @@ fun ResultScreen(
                     }
 
                     Spacer(Modifier.height(16.dp))
-
-                    // Split classifications by category
-                    val avoid    = product.classification.filter { it.category == Category.avoid }
-                    val moderate = product.classification.filter { it.category == Category.moderate }
-                    val healthy  = product.classification.filter { it.category == Category.healthy }
 
                     if (avoid.isNotEmpty()) {
                         SectionHeader("Ingredients to Avoid", Color(0xFFD32F2F))

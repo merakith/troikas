@@ -5,8 +5,8 @@ import kotlinx.coroutines.runBlocking
 import org.troikas.main.network.FoodRepository
 import org.troikas.main.network.SupabaseClient
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 class DatabaseIntegrationTest {
 
@@ -21,8 +21,9 @@ class DatabaseIntegrationTest {
         val product = repo.queryProduct(barcode)
         
         assertNotNull(product, "Error: Diet Coke not found in OpenFoodFacts!")
-        assertTrue(
-            product.name?.contains("Coke", ignoreCase = true) == true, 
+        assertEquals(
+            product.name?.contains("Coke", ignoreCase = true),
+            true,
             "Error: Product found but name doesn't match Coke"
         )
     }
