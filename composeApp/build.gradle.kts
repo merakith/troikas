@@ -11,7 +11,7 @@ plugins {
 }
 
 val secretsProperties = org.jetbrains.kotlin.konan.properties.Properties()
-val secretsFile = rootProject.file("secret.properties")
+val secretsFile = rootProject.file("local.properties")
 if (secretsFile.exists()) {
     secretsFile.inputStream().use { secretsProperties.load(it) }
 }
