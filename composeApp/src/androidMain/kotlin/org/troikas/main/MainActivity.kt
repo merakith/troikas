@@ -8,17 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import org.troikas.main.database.AppDatabase
+import org.koin.android.ext.android.inject
 import org.troikas.main.database.IngredientRepository
 import org.troikas.main.work.SyncScheduler
 
 class MainActivity : ComponentActivity() {
+    
+    private val repo: IngredientRepository by inject()
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         SyncScheduler.scheduleDailySync(applicationContext)
-        val db = AppDatabase.getDatabase(applicationContext)
-        val repo = IngredientRepository(db.ingredientDao())
         
         lifecycleScope.launch {
             println("DEBUG: Manual Sync Starting...")
