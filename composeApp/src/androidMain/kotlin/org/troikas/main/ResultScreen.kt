@@ -1,7 +1,6 @@
 package org.troikas.main
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,31 +44,32 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import org.koin.androidx.compose.koinViewModel
 import org.troikas.main.database.Category
 import org.troikas.main.database.IngredientClassification
 
 // ── Helper functions ──────────────────────────────────────────────────────────
 fun categoryColor(category: Category): Color = when (category) {
-    Category.avoid    -> Color(0xFFD32F2F)
+    Category.avoid -> Color(0xFFD32F2F)
     Category.moderate -> Color(0xFFF39C12)
-    Category.healthy  -> Color(0xFF116E45)
+    Category.healthy -> Color(0xFF116E45)
 }
 
 fun categoryIcon(category: Category): ImageVector = when (category) {
-    Category.avoid    -> Icons.Default.Warning
+    Category.avoid -> Icons.Default.Warning
     Category.moderate -> Icons.Default.Info
-    Category.healthy  -> Icons.Default.CheckCircle
+    Category.healthy -> Icons.Default.CheckCircle
 }
 
 fun categoryRiskLabel(category: Category): String = when (category) {
-    Category.avoid    -> "HIGH RISK"
+    Category.avoid -> "HIGH RISK"
     Category.moderate -> "MODERATE"
-    Category.healthy  -> "GOOD"
+    Category.healthy -> "GOOD"
 }
-fun categoryTagLabel(category: Category): String = when(category){
-    Category.avoid ->  "HARMFUL"
+
+fun categoryTagLabel(category: Category): String = when (category) {
+    Category.avoid -> "HARMFUL"
     Category.moderate -> "SPARSE CONSUMPTION"
     Category.healthy -> "BENEFICIAL"
 }
@@ -103,8 +103,8 @@ fun SectionHeader(title: String, color: Color) {
 @Composable
 fun IngredientCard(item: IngredientClassification) {
     val color = categoryColor(item.category)
-    val icon  = categoryIcon(item.category)
-    val risk  = categoryRiskLabel(item.category)
+    val icon = categoryIcon(item.category)
+    val risk = categoryRiskLabel(item.category)
     val tag = categoryTagLabel(item.category)
     Card(
         colors = CardDefaults.cardColors(
@@ -115,6 +115,7 @@ fun IngredientCard(item: IngredientClassification) {
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 6.dp)
     ) {
+        @Suppress("DEPRECATION")
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -180,7 +181,7 @@ fun IngredientCard(item: IngredientClassification) {
 fun ResultScreen(
     barcode: String?,
     navController: NavController,
-    viewModel: ResultViewModel = viewModel(factory=ResultViewModelFactory(androidx.compose.ui.platform.LocalContext.current))
+    viewModel: ResultViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
@@ -197,7 +198,7 @@ fun ResultScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Smart Grahak",
+                        "Product Details",
                         color = Color.Black,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Normal
@@ -210,7 +211,7 @@ fun ResultScreen(
                             contentDescription = "Back",
 
 
-                        )
+                            )
                     }
                 },
                 actions = {
@@ -263,12 +264,12 @@ fun ResultScreen(
                     val product = state.product
 
 
-                    val Avoid = product.classification.filter {it.category == Category.avoid }
-                    val Moderate = product.classification.filter {it.category == Category.moderate }
+                    // Split classifications by category
+                    val avoid = product.classification.filter { it.category == Category.avoid }
+                    val moderate = product.classification.filter { it.category == Category.moderate }
+                    val healthy = product.classification.filter { it.category == Category.healthy }
 
-                    val Healthy = product.classification.filter {it.category == Category.healthy }
-
-                    val healthScore = (100 - (Avoid.size*15) -(Moderate.size*15) - minOf(Healthy.size*2,10)).coerceIn(0,100)
+                    val healthScore = (100 - (avoid.size*15) -(moderate.size*15) - minOf(healthy.size*2,10)).coerceIn(0,100)
                     val (scoreColor,scoreLabel) = when{
                         healthScore >= 75 -> Color(0xFF2ECC71) to "Excellent"
                         healthScore >= 50 -> Color(0xFFF39C12) to "Good"
@@ -341,11 +342,6 @@ fun ResultScreen(
                     }
 
                     Spacer(Modifier.height(16.dp))
-
-                    // Split classifications by category
-                    val avoid    = product.classification.filter { it.category == Category.avoid }
-                    val moderate = product.classification.filter { it.category == Category.moderate }
-                    val healthy  = product.classification.filter { it.category == Category.healthy }
 
                     if (avoid.isNotEmpty()) {
                         SectionHeader("Ingredients to Avoid", Color(0xFFD32F2F))
