@@ -274,8 +274,6 @@ fun ResultScreen(
                         healthScore >= 50 -> Color(0xFFF39C12) to "Good"
                         healthScore >= 25 -> Color(0xFFE67E22) to "Poor"
                         else -> Color(0xFFD32F2F) to "Harmful"
-
-
                     }
                     Spacer(Modifier.height(8.dp))
 
@@ -326,7 +324,7 @@ fun ResultScreen(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Box(
                                     modifier = Modifier
-                                        .background(Color(0xFF2ECC71), shape = CircleShape)
+                                        .background(scoreColor, shape = CircleShape)
                                         .size(40.dp),
                                     contentAlignment = Alignment.Center
                                 ) {
