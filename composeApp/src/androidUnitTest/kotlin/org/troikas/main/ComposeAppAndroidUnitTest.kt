@@ -1,5 +1,6 @@
 package org.troikas.main
 
+import android.util.Log
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.runBlocking
 import org.troikas.main.network.FoodRepository
@@ -30,7 +31,7 @@ class DatabaseIntegrationTest {
 
     // 2. Test the Supabase Connection
     @Test
-    fun testSupabaseConnection() = runBlocking {
+    fun testSupabaseConnection(): Unit = runBlocking {
         try {
             // Try to fetch just 1 row from your products table
             val response = SupabaseClient.client.postgrest["products"]
@@ -39,9 +40,9 @@ class DatabaseIntegrationTest {
                 }
             
             assertNotNull(response, "Error: Could not connect to Supabase products table!")
-            println("Supabase connection successful.")
+            Log.d("SupabaseConnection Test", "Supabase connection successful.")
         } catch (e: Exception) {
-            println("Supabase Test Failed: ${e.message}")
+            Log.e("SupabaseConnection Test", "Supabase Test Failed: ${e.message}")
             throw e
         }
     }
