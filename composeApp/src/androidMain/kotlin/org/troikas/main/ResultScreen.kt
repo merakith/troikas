@@ -197,7 +197,7 @@ fun ResultScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Smart Grahak",
+                        "Product Details",
                         color = Color.Black,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Normal
