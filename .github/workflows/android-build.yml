@@ -14,18 +14,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: gradle
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      - name: Create local.properties
+        env:
+          URL: ${{ secrets.SUPABASE_URL }}
+          KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          cat <<EOF > local.properties
+          SUPABASE_URL=$URL
+          SUPABASE_ANON_KEY=$KEY
+          EOF
 
-    - name: Run Backend Engine Test
-      run: ./gradlew :composeApp:testDebugUnitTest --tests "*DatabaseIntegrationTest*"
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run Backend Engine Test
+        run: ./gradlew :composeApp:testDebugUnitTest --tests "*DatabaseIntegrationTest*"
