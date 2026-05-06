@@ -64,7 +64,6 @@ class IngredientRepository(
                 }
             } catch (e: Exception) {
                 println("Sync failed: ${e.message}")
-                throw e
             }
         }
     }

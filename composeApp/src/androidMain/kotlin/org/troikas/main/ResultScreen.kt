@@ -264,15 +264,10 @@ fun ResultScreen(
 
 
                     val avoid = product.classification.filter { it.category == Category.avoid }
-                    val moderate =
-                        product.classification.filter { it.category == Category.moderate }
-
+                    val moderate = product.classification.filter { it.category == Category.moderate }
                     val healthy = product.classification.filter { it.category == Category.healthy }
 
-                    val healthScore = (100 - (avoid.size * 15) - (moderate.size * 15) + minOf(
-                        healthy.size * 2,
-                        10
-                    )).coerceIn(0, 100)
+                    val healthScore = (100 - (avoid.size * 15) - (moderate.size * 15) + minOf(healthy.size * 2, 10)).coerceIn(0, 100)
                     val (scoreColor, scoreLabel) = when {
                         healthScore >= 75 -> Color(0xFF2ECC71) to "Excellent"
                         healthScore >= 50 -> Color(0xFFF39C12) to "Good"
@@ -282,13 +277,12 @@ fun ResultScreen(
                     Spacer(Modifier.height(8.dp))
 
 
-                    // Purple product header
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
                             .clip(RoundedCornerShape(16.dp))
-                            .background(Color(0xFF4A3CB5))
+                            .background(Color(0xFF091009))
                             .padding(20.dp)
                     ) {
                         Column(horizontalAlignment = Alignment.Start) {
